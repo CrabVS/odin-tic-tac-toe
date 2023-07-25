@@ -26,22 +26,22 @@ const gameControl = (() => {
     }
 
     const getPlayerSymbol = () => {
-        return playerTurn === 0 ? 'O' : 'X';
+        return players[playerTurn].getSymbol();
     }
 
     const nextPlayerTurn = () => {
         playerTurn = playerTurn === 0 ? 1 : 0;
     }
 
-    const configureWinner = (winningSymbol) => {
-        winner = winningSymbol === 'O' ? 'Player 1' : 'Player 2';
+    const declareWinner = () => {
+        winner = players[playerTurn].getSymbol();
+        console.log(`${players[playerTurn].getName()} Wins!`)
         gameover = true;
     }
 
     const confirmWinningLine = (tileArray) => {
         if ((tileArray[0] !== '') && (tileArray[0] === tileArray[1]) && (tileArray[0] === tileArray[2])) {
-            configureWinner(tileArray[0]);
-            console.log('winner!');
+            declareWinner();
         }
     }
 
