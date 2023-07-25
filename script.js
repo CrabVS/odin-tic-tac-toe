@@ -1,8 +1,25 @@
+const player = (name, symbol) => {
+    const getName = () => {
+        return name;
+    }
+
+    const setName = (newName) => {
+        name = newName;
+    }
+
+    const getSymbol = () => {
+        return symbol;
+    }
+
+    return { getName, setName, getSymbol }
+}
+
 // Controls the flow of the game
 const gameControl = (() => {
     let playerTurn = 0;
     let winner = null;
     let gameover = false;
+    let players = [];
 
     const getGameStatus = () => {
         return !gameover;
@@ -76,6 +93,15 @@ const gameControl = (() => {
         }
     }
 
+    const createPlayers = () => {
+        const player1 = player('Player 1', 'O');
+        const player2 = player('Player 2', 'X');
+        
+        players = [player1, player2];
+    }
+
+    createPlayers();
+
     return { getPlayerSymbol, checkForWinner, getGameStatus }
 })();
 
@@ -116,9 +142,5 @@ const gameBoard = (() => {
 
     return { initializeBoard }
 })();
-
-const player = () => {
-
-}
 
 gameBoard.initializeBoard();
