@@ -14,12 +14,21 @@ const player = (name, symbol) => {
     return { getName, setName, getSymbol }
 }
 
+const announcer = (() => {
+    const announcerEl = document.querySelector('#announcer h2');
+
+    const announceMessage = (message) => {
+        announcerEl.textContent = message;
+    }
+
+    return { announceMessage }
+})();
+
 // Controls the flow of the game
 const gameControl = (() => {
     const startBtn = document.getElementById('start-btn');
 
     let playerTurn = 0;
-    let winner = null;
     let gameover = true;
     let players = [];
 
@@ -33,11 +42,17 @@ const gameControl = (() => {
 
     const nextPlayerTurn = () => {
         playerTurn = playerTurn === 0 ? 1 : 0;
+        announcer.announceMessage(`${players[playerTurn].getName()}'s Turn!`);
     }
 
     const declareWinner = () => {
-        winner = players[playerTurn].getSymbol();
-        console.log(`${players[playerTurn].getName()} Wins!`)
+        announcer.announceMessage(`${players[playerTurn].getName()} Wins!`);
+        gameover = true;
+        startBtn.disabled = false;
+    }
+
+    const declareDraw = () => {
+        announcer.announceMessage('It\'s a Draw!');
         gameover = true;
         startBtn.disabled = false;
     }
@@ -88,7 +103,7 @@ const gameControl = (() => {
         }
 
         if (!tiles.includes('') && gameControl.getGameStatus()) {
-            console.log('Draw!');
+            declareDraw();
         }
 
         if (gameControl.getGameStatus()) {
@@ -111,6 +126,7 @@ const gameControl = (() => {
 
     startBtn.addEventListener('click', () => {
         startGame();
+        announcer.announceMessage(`${players[playerTurn].getName()}'s Turn!`);
     })
 
     createPlayers();
