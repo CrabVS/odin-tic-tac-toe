@@ -1,4 +1,6 @@
 const player = (name, symbol) => {
+    let score = 0;
+
     const getName = () => {
         return name;
     }
@@ -11,7 +13,15 @@ const player = (name, symbol) => {
         return symbol;
     }
 
-    return { getName, setName, getSymbol }
+    const increaseScore = () => {
+        score += 1;
+    }
+
+    const getScore = () => {
+        return score;
+    }
+
+    return { getName, setName, getSymbol, increaseScore, getScore }
 }
 
 const announcer = (() => {
@@ -46,7 +56,11 @@ const gameControl = (() => {
     }
 
     const declareWinner = () => {
+        const playerScoreEl = document.querySelector(`#player-${playerTurn + 1} h6 span`);
+
         announcer.announceMessage(`${players[playerTurn].getName()} Wins!`);
+        players[playerTurn].increaseScore();
+        playerScoreEl.textContent = players[playerTurn].getScore();
         gameover = true;
         startBtn.disabled = false;
     }
