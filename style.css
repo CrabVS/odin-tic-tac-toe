@@ -1,9 +1,19 @@
 body {
     margin: 0 auto;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     height: 100vh;
+}
+
+h1 {
+    font-size: 3rem;
+}
+
+h2 {
+    font-size: 1.6rem;
 }
 
 #gameboard {
@@ -34,4 +44,29 @@ body {
 
 .symbol-x {
     color: blue;
+}
+
+#interface {
+    display: flex;
+    gap: 30px;
+}
+
+.player {
+    display: flex;
+    align-items: center;
+}
+
+#start-btn {
+    padding: 8px 10px;
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#start-btn:hover {
+    background-color: #ddd;
+}
+
+#start-btn:active {
+    transform: scale(0.98);
 }

@@ -16,9 +16,11 @@ const player = (name, symbol) => {
 
 // Controls the flow of the game
 const gameControl = (() => {
+    const startBtn = document.getElementById('start-btn');
+
     let playerTurn = 0;
     let winner = null;
-    let gameover = false;
+    let gameover = true;
     let players = [];
 
     const getGameStatus = () => {
@@ -37,6 +39,7 @@ const gameControl = (() => {
         winner = players[playerTurn].getSymbol();
         console.log(`${players[playerTurn].getName()} Wins!`)
         gameover = true;
+        startBtn.disabled = false;
     }
 
     const confirmWinningLine = (tileArray) => {
@@ -100,6 +103,16 @@ const gameControl = (() => {
         players = [player1, player2];
     }
 
+    const startGame = () => {
+        gameover = false;
+        gameBoard.initializeBoard();
+        startBtn.disabled = true;
+    }
+
+    startBtn.addEventListener('click', () => {
+        startGame();
+    })
+
     createPlayers();
 
     return { getPlayerSymbol, checkForWinner, getGameStatus }
@@ -108,7 +121,7 @@ const gameControl = (() => {
 // Controls the board display
 const gameBoard = (() => {
     const gameBoardEl = document.getElementById('gameboard');
-    const tiles = [];
+    let tiles = [];
 
     const createTile = (tileId) => {
         const tile = document.createElement('div');
@@ -131,12 +144,14 @@ const gameBoard = (() => {
     }
 
     const generateTiles = () => {
+        tiles = [];
         for (let index = 0; index < 9; index++) {
             createTile(index);
         }
     }
     
     const initializeBoard = () => {
+        gameBoardEl.innerHTML = '';
         generateTiles();
     }
 
