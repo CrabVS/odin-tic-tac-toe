@@ -31,6 +31,7 @@ const gameBoard = (() => {
             if (tile.textContent === '') {
                 const playerSymbol = gameControl.getPlayerSymbol();;
                 tile.textContent = playerSymbol;
+                tile.classList.add(`symbol-${playerSymbol.toLowerCase()}`);
                 tiles[tileId] = playerSymbol;
                 gameControl.nextPlayerTurn();
             }
